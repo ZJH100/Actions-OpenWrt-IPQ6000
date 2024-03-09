@@ -116,7 +116,17 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        
+
+    # 在这里添加一个步骤，需要手动触发
+    - name: Manual approval
+      if: always()
+      uses: wei/click-to-action@v1
+      with:
+        args: |
+          echo "Workflow paused, waiting for manual approval."
+          echo "Click the button to proceed."
+          # 在此处暂停工作流执行，直到手动触发
+          
     - name: Check space usage
       if: (!cancelled())
       run: df -hT
